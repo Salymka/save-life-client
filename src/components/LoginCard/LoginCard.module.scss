@@ -1,6 +1,132 @@
 .card {
-  height: 300px;
-  width: 550px;
+  height: 400px;
+  width: 700px;
   border: 2px solid #212112;
-  border-radius: 8px;
+  border-radius: 10px;
+  font-family: "Poppins", sans-serif;
+  color: #212112;
+  position: relative;
 }
+
+.signIn {
+  width: 696px;
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.signIn__form {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.signIn__toSignUp {
+  width: 50%;
+  height: 396px;
+  border-radius: 0 10px 10px 0;
+  background: #ffff33;
+  color: #212112;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.signUp {
+  display: flex;
+  justify-content: space-between;
+}
+
+.signUp__form {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  align-items: center;
+}
+
+.signUn__toSignIn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 50%;
+  background: #ffff33;
+  height: 396px;
+  border-radius: 10px 0 0 10px;
+  align-items: center;
+}
+
+input {
+  background-color: #eee;
+  border: none;
+  border-radius: 2px;
+  padding: 10px 10px;
+  margin: 8px 0;
+  width: 80%;
+}
+
+h2 {
+  margin-top: 30px;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+h3 {
+  padding: 10px 15px;
+  font-size: 14px;
+  text-align: center;
+}
+
+button {
+  margin-top: 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  border: 1px solid #FF4B2B;
+  background-color: #212112;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 80ms ease-in;
+}
+
+.errorMessage {
+  position: absolute;
+  color: red;
+  margin: 5px 0 0 5px;
+}
+
+.errorMessage__right {
+  position: absolute;
+  margin: 5px 5px 0 0;
+  right: 0;
+}
+
+.switcher {
+  display: flex;
+
+  &.switcher-enter {
+    opacity: 0;
+  }
+
+  &.switcher-enter-active {
+    opacity: 1;
+    transition: opacity 200ms;
+  }
+
+  &.switcher-exit {
+    opacity: 1;
+  }
+
+  &.switcher-exit-active {
+    opacity: 0;
+    transition: opacity 200ms;
+  }
+}
+

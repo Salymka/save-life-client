@@ -1,7 +1,7 @@
 import {createStore} from 'redux'
 
 export const setUser = "SET_USER";
-export const deleteUser = "DELETE_USER";
+export const exitUser = "EXIT_USER";
 export const setTheme = "SET_THEME";
 
 const defaultState = {
@@ -12,7 +12,7 @@ function reducer(state = defaultState, action) {
     switch (action.type) {
         case setUser:
             return {...state, user: action.user}
-        case deleteUser:
+        case exitUser:
             return {...state, user: null}
         case setTheme:
             return {...state, theme: action.theme}
