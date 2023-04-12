@@ -1,4 +1,5 @@
 import {createStore} from 'redux'
+import {lightTheme} from "../App";
 
 export const setUser = "SET_USER";
 export const exitUser = "EXIT_USER";
@@ -6,7 +7,7 @@ export const setTheme = "SET_THEME";
 
 const defaultState = {
     user: null,
-    theme: 'light'
+    theme: 'light__theme'
 }
 function reducer(state = defaultState, action) {
     switch (action.type) {

@@ -1,0 +1,51 @@
+:root {
+  --dark-1: #212112;
+  --dark-2: #212121;
+  --dark-3: #181818;
+  --dark-4: #333333;
+  --light-1: #ffff33;
+  --light-2: #f3f3f3;
+  --light-3: #ffffff;
+  --active-link: red;
+  --bg-input: #eeeeee;
+
+
+}
+
+.light__theme {
+  --bg-page: var(--light-3);
+  --bg-fild: var(--light-1);
+  --bg-fild-reverse: var(--dark-2);
+  --bg-unfild: var(--light-3);
+  --text: var(--dark-1);
+  --border: var(--dark-2);
+  --bt-outligh: #FF4B2B;
+  --bt-bg: var(--dark-2);
+  --bt-text: var(--light-2);
+
+}
+
+.dark__theme {
+  --bg-page: var(--dark-4);
+  --bg-fild: var(--dark-1);
+  --bg-fild-reverse: var(--light-1);
+  --bg-unfild: var(--light-2);
+  --text: var(--light-2);
+  --border: var(--light-2);
+  --bt-outligh: #FF4B2B;
+  --bt-bg: var(--dark-2);
+  --bt-text: var(--light-2);
+
+
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.App {
+  min-height: 100vh;
+  background-color: var(--bg-page);
+}

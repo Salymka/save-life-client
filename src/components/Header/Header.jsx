@@ -6,6 +6,7 @@ import Switch from "../../UI/Switch/Switch";
 import {useDispatch, useSelector} from 'react-redux'
 import {setTheme} from "../../store/store";
 import {homePage, firstAidPage, messagesPage, loginPage, userInfoPage, helpPhonesPage} from '../../router/router'
+import {darkTheme, lightTheme} from "../../App";
 
 const Header = () => {
     const dispatch = useDispatch()
@@ -13,17 +14,17 @@ const Header = () => {
     const user = useSelector(state => state.user)
     const changeTheme = (event) => {
         if (event.target.checked) {
-            dispatch({type: setTheme, theme: 'dark'})
+            dispatch({type: setTheme, theme: darkTheme})
         } else {
-            dispatch({type: setTheme, theme: 'light'})
+            dispatch({type: setTheme, theme: lightTheme})
         }
     }
 
     const isActiveLink = (isActive) => {
-        return isActive ? styles.activeLink + ' ' : ''
+        return isActive ? styles.activeLink + ' ' : '';
     }
     return (
-        <div className={theme === "light" ? styles.header_component : styles.header_component_dark}>
+        <div className={styles.header_component}>
             <header className={styles.header}>
                 <div >
                     <NavLink to={homePage} className={({isActive}) => isActiveLink(isActive) + styles.logo}>
@@ -34,7 +35,7 @@ const Header = () => {
 
                 <div className={styles.navBar}>
                     <div className={styles.navBar_switch}>
-                        <Switch checked={theme !== 'light'} switchToggle={changeTheme}/>
+                        <Switch checked={theme !== lightTheme} switchToggle={changeTheme}/>
                     </div>
                     <NavLink to={homePage} className={({isActive}) => isActiveLink(isActive) + styles.navBar_item}>
                         Головна

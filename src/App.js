@@ -1,17 +1,20 @@
-import './App.module.scss';
+import './App.css';
 import {RouterProvider} from "react-router-dom";
 import router from "./router/router";
-import {Provider} from "react-redux";
-import store from './store/store'
+import {useSelector} from "react-redux";
 
+export const lightTheme = 'light__theme';
+export const darkTheme = 'dark__theme';
 function App() {
-  return (
-    <div>
-        <Provider store={store}>
-            <RouterProvider router={router}/>
-        </Provider>
-    </div>
-  );
+    const theme = useSelector(state => state.theme)
+    return (
+        <div>
+            <div className={`App ${theme}`}>
+                <RouterProvider router={router}/>
+            </div>
+        </div>
+
+    );
 }
 
 export default App;

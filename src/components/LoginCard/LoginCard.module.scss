@@ -1,11 +1,12 @@
 .card {
   height: 400px;
   width: 700px;
-  border: 2px solid #212112;
+  border: 2px solid var(--border);
   border-radius: 10px;
   font-family: "Poppins", sans-serif;
-  color: #212112;
+  color: var(--text);
   position: relative;
+  overflow: hidden;
 }
 
 .signIn {
@@ -27,8 +28,8 @@
   width: 50%;
   height: 396px;
   border-radius: 0 10px 10px 0;
-  background: #ffff33;
-  color: #212112;
+  background: var(--bg-fild);
+  color: var(text);
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -54,14 +55,14 @@
   flex-direction: column;
   justify-content: center;
   width: 50%;
-  background: #ffff33;
+  background: var(--bg-fild);
   height: 396px;
   border-radius: 10px 0 0 10px;
   align-items: center;
 }
 
 input {
-  background-color: #eee;
+  background-color: var(--bg-input);
   border: none;
   border-radius: 2px;
   padding: 10px 10px;
@@ -81,20 +82,6 @@ h3 {
   text-align: center;
 }
 
-button {
-  margin-top: 20px;
-  border-radius: 20px;
-  cursor: pointer;
-  border: 1px solid #FF4B2B;
-  background-color: #212112;
-  color: #ffffff;
-  font-size: 12px;
-  font-weight: bold;
-  padding: 12px 45px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  transition: transform 80ms ease-in;
-}
 
 .errorMessage {
   position: absolute;
@@ -128,5 +115,20 @@ button {
     opacity: 0;
     transition: opacity 200ms;
   }
+}
+
+.signIn,
+.signUp {
+  position: absolute;
+  transform: translate(0px);
+  transition: transform 0.5s linear;
+}
+
+.signIn.hidden {
+  transform: translate(100%);
+}
+
+.signUp.hidden {
+  transform: translate(-100%);
 }
 

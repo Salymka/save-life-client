@@ -1,0 +1,19 @@
+.customButton {
+  font-family: "Poppins", sans-serif;
+  margin-top: 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  border: 1px solid var(--bt-outligh);
+  background-color: var(--bt-bg);
+  color: var(--bt-text);
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 80ms ease-in;
+
+  &:disabled {
+    opacity: 0.7;
+  }
+}
