@@ -1,17 +1,19 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './LoginCard.module.scss'
-import {useDispatch, useSelector} from "react-redux";
-import {setUser} from "../../store/store";
+import {useDispatch} from "react-redux";
 import UsersApi from "../../api/usersApi";
 import {useIsUserLogin} from "../../hooks/useIsUserLogin";
 import {useNavigate} from "react-router-dom";
 import {homePage} from "../../router/router";
 import Button from "../../UI/Button/Button";
+import {useUserFromLS} from "../../hooks/useUserFromLS";
+import Input from "../../UI/Input/Input";
 
 
 const LoginCard = () => {
     const [isRegForm, setIsRegForm] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
+    const [user, setUserToLS] = useUserFromLS()
     const isUserLogin = useIsUserLogin()
     const navigate = useNavigate()
     const [errorMessage, setErrorMessage] = useState('')
@@ -37,15 +39,19 @@ const LoginCard = () => {
         })
 
         setIsLoading(true)
-
-        UsersApi.loginUser(body)
-            .then(data => {
-                if (data._id) {
-                    dispatch({type: setUser, user: data})
-                    navigate(homePage)
-                }
-                setErrorMessage('* ' + data.message)
-            }).finally(() => setIsLoading(false))
+        try {
+            UsersApi.loginUser(body)
+                .then(data => {
+                    if (data._id) {
+                        setUserToLS(data)
+                        navigate(homePage)
+                    }
+                    setErrorMessage('* ' + data.message)
+                })
+                .finally(() => setIsLoading(false))
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     const signUpUser = () => {
@@ -62,13 +68,14 @@ const LoginCard = () => {
             "password": loginParams.password
         })
         try {
+            setIsLoading(true)
             UsersApi.createUser(body)
                 .then(data => {
-                    console.log(!!data.user)
+                    console.log(data.user)
                     if (data.user) {
                         setTimeout(() => {
-                            setErrorMessage('')
-                            setIsRegForm(false)
+                            setUserToLS(data.user)
+                            navigate(homePage)
                         }, 1000)
                     }
                     setErrorMessage('* ' + data.message)
@@ -114,21 +121,26 @@ const LoginCard = () => {
                     <h2>
                         {`Зареєструвати Аккаунт`}
                     </h2>
-                    <input
+                    <Input
                         type={"text"}
                         placeholder={'Name'}
-                        onChange={(event) => changeParams("name", event.target.value)}/>
-                    <input
+                        onChange={(event) => changeParams("name", event.target.value)}
+                        value={loginParams.name}/>
+                    <Input
                         type={"text"}
                         placeholder={'Second Name'}
-                        onChange={(event) => changeParams("secondName", event.target.value)}/>
-                    <input
+                        onChange={(event) => changeParams("secondName", event.target.value)}
+                        value={loginParams.secondName}/>
+                    <Input
                         type={"email"}
                         placeholder={"Email"}
-                        onChange={(event) => changeParams("email", event.target.value)}/>
-                    <input type={"password"}
-                           placeholder={"Password"}
-                           onChange={(event) => changeParams("password", event.target.value)}/>
+                        onChange={(event) => changeParams("email", event.target.value)}
+                        value={loginParams.email}/>
+                    <Input
+                        type={"password"}
+                        placeholder={"Password"}
+                        onChange={(event) => changeParams("password", event.target.value)}
+                        value={loginParams.password}/>
                     <Button
                         onClick={signUpUser}
                         isDisable={isLoading}>
@@ -145,10 +157,17 @@ const LoginCard = () => {
                     <h2>
                         {`Увійти до Аккаунту`}
                     </h2>
-                    <input type={"email"} placeholder={"Email"}
-                           onChange={(event) => changeParams("email", event.target.value)}/>
-                    <input type={"password"} placeholder={"Password"}
-                           onChange={(event) => changeParams("password", event.target.value)}/>
+                    <Input
+                        type={"email"}
+                        placeholder={"Email"}
+                        onChange={(event) => changeParams("email", event.target.value)}
+                        value={loginParams.email}/>
+                    <Input
+                        type={"password"}
+                        placeholder={"Password"}
+                        onChange={(event) => changeParams("password", event.target.value)}
+                        value={loginParams.password}/>
+
                     <Button
                         onClick={logInUser}
                         isDisable={isLoading}>

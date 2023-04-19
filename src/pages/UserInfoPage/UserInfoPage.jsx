@@ -1,8 +1,7 @@
 import React from 'react';
-// import styles from './HomePage.module.scss'
 import Header from "../../components/Header/Header";
-const HomePage = () => {
-
+import styles from './UserInfoPage.module.scss'
+const UserInfoPage = () => {
     return (
         <div>
             <Header/>
@@ -10,4 +9,4 @@ const HomePage = () => {
     );
 };
 
-export default HomePage;
+export default UserInfoPage;

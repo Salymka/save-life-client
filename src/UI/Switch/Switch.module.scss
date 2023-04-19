@@ -4,7 +4,7 @@ input[type=checkbox]{
   visibility: hidden;
 
   &:checked + label {
-    background: #ffff33;
+    background: var(--light-1);
   }
 
   &:checked + label:after {

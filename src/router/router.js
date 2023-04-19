@@ -1,11 +1,15 @@
 import {createBrowserRouter} from "react-router-dom";
 import HomePage from "../pages/HomePage/HomePage";
 import LoginPage from "../pages/LoginPage/LoginPage";
+import MessagesPage from "../pages/MessagesPage/MessagesPage";
+import FirstAidPage from "../pages/FirstAidPage/FirstAidPage";
+import UserInfoPage from "../pages/UserInfoPage/UserInfoPage";
+import HelpPhonesPage from "../pages/HelpPhonesPage/HelpPhonesPage";
 
 export const homePage = '/';
 export const loginPage = '/login';
 export const firstAidPage = '/first-aid';
-export const helpPhonesPage = 'help-phones';
+export const helpPhonesPage = '/help-phones';
 export const messagesPage = '/send-alert-message';
 export const userInfoPage = '/user-info';
 
@@ -20,19 +24,19 @@ const router = createBrowserRouter([
     },
     {
         path: firstAidPage,
-        element: <div>{firstAidPage}</div>,
+        element: <FirstAidPage/>,
     },
     {
         path: helpPhonesPage,
-        element: <div>{helpPhonesPage}</div>,
+        element: <HelpPhonesPage/>,
     },
     {
         path: messagesPage,
-        element: <div>{messagesPage}</div>,
+        element: <MessagesPage/>,
     },
     {
         path: userInfoPage,
-        element: <div>{userInfoPage}</div>,
+        element: <UserInfoPage/>,
     },
 
 ]);

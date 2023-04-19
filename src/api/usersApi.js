@@ -1,6 +1,3 @@
-import {setUser} from "../store/store";
-
-
 class UsersApi{
     async loginUser(body) {
         try {

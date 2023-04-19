@@ -1,13 +1,13 @@
 import React from 'react';
-// import styles from './HomePage.module.scss'
 import Header from "../../components/Header/Header";
-const HomePage = () => {
-
+import styles from './FirstAidPage.module.scss'
+const FirstAidPage = () => {
     return (
         <div>
             <Header/>
+
         </div>
     );
 };
 
-export default HomePage;
+export default FirstAidPage;

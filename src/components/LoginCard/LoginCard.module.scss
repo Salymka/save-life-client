@@ -7,6 +7,11 @@
   color: var(--text);
   position: relative;
   overflow: hidden;
+
+  input {
+    margin: 8px 0;
+    width: 80%;
+  }
 }
 
 .signIn {
@@ -22,6 +27,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  h2 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-weight: bold;
+  }
 }
 
 .signIn__toSignUp {
@@ -36,6 +47,18 @@
   align-items: center;
   justify-content: center;
 
+  h2 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-weight: bold;
+  }
+
+  h3 {
+    padding: 10px 15px;
+    font-size: 14px;
+    text-align: center;
+  }
+
 }
 
 .signUp {
@@ -48,6 +71,12 @@
   flex-direction: column;
   width: 50%;
   align-items: center;
+
+  h2 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-weight: bold;
+  }
 }
 
 .signUn__toSignIn {
@@ -59,29 +88,19 @@
   height: 396px;
   border-radius: 10px 0 0 10px;
   align-items: center;
-}
 
-input {
-  background-color: var(--bg-input);
-  border: none;
-  border-radius: 2px;
-  padding: 10px 10px;
-  margin: 8px 0;
-  width: 80%;
-}
+  h2 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-weight: bold;
+  }
 
-h2 {
-  margin-top: 30px;
-  margin-bottom: 15px;
-  font-weight: bold;
+  h3 {
+    padding: 10px 15px;
+    font-size: 14px;
+    text-align: center;
+  }
 }
-
-h3 {
-  padding: 10px 15px;
-  font-size: 14px;
-  text-align: center;
-}
-
 
 .errorMessage {
   position: absolute;

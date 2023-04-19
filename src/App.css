@@ -3,7 +3,7 @@
   --dark-2: #212121;
   --dark-3: #181818;
   --dark-4: #333333;
-  --light-1: #ffff33;
+  --light-1: #fff523;
   --light-2: #f3f3f3;
   --light-3: #ffffff;
   --active-link: red;
@@ -22,6 +22,7 @@
   --bt-outligh: #FF4B2B;
   --bt-bg: var(--dark-2);
   --bt-text: var(--light-2);
+  transition: all 1s ease;
 
 }
 
@@ -35,6 +36,8 @@
   --bt-outligh: #FF4B2B;
   --bt-bg: var(--dark-2);
   --bt-text: var(--light-2);
+  transition: all 0.5s ease-out;
+
 
 
 }
@@ -47,5 +50,5 @@
 
 .App {
   min-height: 100vh;
-  background-color: var(--bg-page);
+  background: var(--bg-page);
 }

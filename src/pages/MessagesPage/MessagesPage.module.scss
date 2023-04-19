@@ -1,0 +1,30 @@
+.body {
+  font-family: "Poppins", sans-serif;
+  width: 1620px;
+  height: 100vh;
+  margin: 20px auto 0;
+
+}
+
+
+.titleWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.titleWrapper__title {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+}
+
+
+.messages {
+  display: flex;
+}
+
+
+.messages__wrapper {
+  width: 60%;
+}
