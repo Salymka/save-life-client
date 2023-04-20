@@ -12,8 +12,10 @@ function App() {
     useUserFromLS()
     return (
         <div>
-            <div className={`${theme} App`}>
-                <RouterProvider router={router}/>
+            <div className={`${theme}`}>
+                <div className={'App'}>
+                    <RouterProvider router={router}/>
+                </div>
             </div>
         </div>
 

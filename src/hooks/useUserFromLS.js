@@ -36,5 +36,15 @@ export const useUserFromLS = () => {
         }
     }
 
-    return [user, setUserToLS]
+    const deleteUserFromLS = () => {
+        try {
+            if (typeof window !== "undefined") {
+                window.localStorage.removeItem(localStorageUser);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    return [user, setUserToLS, deleteUserFromLS]
 }

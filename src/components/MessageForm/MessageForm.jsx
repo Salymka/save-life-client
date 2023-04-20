@@ -1,8 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import styles from "./MessageForm.module.scss";
 import Input from "../../UI/Input/Input";
+import MessagesApi from "../../api/messagesApi";
+import {useUserFromLS} from "../../hooks/useUserFromLS";
+import {useNavigate} from "react-router-dom";
 
-const MessageForm = () => {
+const MessageForm = ({userId}) => {
     const fr = new FileReader();
 
     const [messageParams, setMessageParams] = useState({
@@ -39,13 +42,7 @@ const MessageForm = () => {
         })
 
 
-        fetch('http://127.0.0.1:5050/messages/send_alert_message/64371fb8f3dc84837e19df38', {
-            method: 'POST',
-            body: data,
-            // 👇 Set headers manually for single file upload
-
-        })
-            .then((res) => res.json())
+        MessagesApi.createAlertMessage({userId, body: data})
             .then((data) => console.log(data))
             .catch((err) => console.error(err));
     };
@@ -91,7 +88,7 @@ const MessageForm = () => {
                 className={styles.newMessageBox__textarea}
                 maxLength={5000}
                 placeholder={`Опишіть ситуацію`}/>
-            <input type='file' onChange={onSelectFile} multiple/>
+            <input type='file' onChange={onSelectFile} multiple accept={'image/*'}/>
             {/*{selectedFile &&*/}
             {/*    <img src={`${preview}`} alt={''} style={{width: 60}}/>*/}
             {/*}*/}
