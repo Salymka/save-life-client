@@ -5,18 +5,19 @@ import MessagesApi from "../../api/messagesApi";
 import {useUserFromLS} from "../../hooks/useUserFromLS";
 import {useNavigate} from "react-router-dom";
 
-const MessageForm = ({userId}) => {
+const MessageForm = ({userId, updateMassages}) => {
     const fr = new FileReader();
 
     const [messageParams, setMessageParams] = useState({
         title: null,
         dangerLevel: null,
         description: null,
+        location: null,
         photos: []
     })
-    const [selectedFile, setSelectedFile] = useState()
+    console.log(messageParams)
+    const [selectedFile, setSelectedFile] = useState({})
     const [preview, setPreview] = useState({})
-    console.log(selectedFile)
     // console.log(preview)
     const changeParams = (key, param) => {
         setMessageParams({...messageParams, [key]: param})
@@ -30,20 +31,23 @@ const MessageForm = ({userId}) => {
         setSelectedFile(e.target.files)
     }
     const handleUploadClick = () => {
-        if (!selectedFile) {
-            return;
-        }
+
         const data = new FormData();
-        data.append('title', 'ERROR HOUSE');
-        data.append('alertType', 'red');
-        data.append('comment', 'HELP');
-        [...selectedFile].forEach((file, index) => {
-            data.append(`photos`, file, file.name);
-        })
+        data.append('title', messageParams.title);
+        data.append('alertType', messageParams.dangerLevel);
+        data.append('comment', messageParams.description);
+        if (selectedFile?.length) {
+            [...selectedFile].forEach((file, index) => {
+                data.append(`photos`, file, file.name);
+            })
+        }
+
 
 
         MessagesApi.createAlertMessage({userId, body: data})
-            .then((data) => console.log(data))
+            .then((data) => {
+                if (data.status === 'create') updateMassages()
+            })
             .catch((err) => console.error(err));
     };
 
@@ -71,8 +75,9 @@ const MessageForm = ({userId}) => {
                     placeholder={'Заголовок'}
                     onChange={(event) => changeParams('title', event.target.value)}
                     value={messageParams.title}/>
-                <select className={styles.newMessageBox__select} defaultValue={messageParams.dangerLevel}>
-                    <option disabled value={'green'}>{`Вкажіть рівень небезпеки`}</option>
+                <select className={styles.newMessageBox__select}
+                        onChange={(event) => changeParams('dangerLevel', event.target.value)}>
+                    <option value={null}>{`Вкажіть рівень небезпеки`}</option>
                     <option value={'green'}>{`Зелений рівень`}</option>
                     <option value={'yellow'}>{`Жовтий рівень`}</option>
                     <option value={'orange'}>{`Оранжевий рівень`}</option>
@@ -82,12 +87,13 @@ const MessageForm = ({userId}) => {
             <Input
                 type={'text'}
                 placeholder={'Вкажіть Адресу'}
-                onChange={(event) => changeParams('title', event.target.value)}
-                value={messageParams.title}/>
+                onChange={(event) => changeParams('location', event.target.value)}
+                value={messageParams.location}/>
             <textarea
                 className={styles.newMessageBox__textarea}
                 maxLength={5000}
-                placeholder={`Опишіть ситуацію`}/>
+                placeholder={`Опишіть ситуацію`}
+                onChange={(event) => changeParams('description', event.target.value)}/>
             <input type='file' onChange={onSelectFile} multiple accept={'image/*'}/>
             {/*{selectedFile &&*/}
             {/*    <img src={`${preview}`} alt={''} style={{width: 60}}/>*/}

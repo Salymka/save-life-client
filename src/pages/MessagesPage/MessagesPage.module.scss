@@ -9,7 +9,7 @@
 
 .titleWrapper {
   display: flex;
-  justify-content: space-between;
+  justify-content: end;
   align-items: center;
 
 }
@@ -26,5 +26,37 @@
 
 
 .messages__wrapper {
+  position: relative;
   width: 60%;
+}
+
+.message {
+  position: relative;
+  max-width: 100%;
+  height: 180px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  margin: 0 0 0 20px;
+  padding: 10px;
+
+  & + .message {
+    margin-top: 20px;
+  }
+}
+
+
+.message_delete {
+  position: absolute;
+  width: 60px;
+  height: 30px;
+  border-radius: 0 8px 0 0;
+  border: 2px solid var(--border);
+  right: -2px;
+  top: -2px;
+  cursor: pointer;
+
+  background: red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

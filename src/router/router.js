@@ -5,6 +5,7 @@ import MessagesPage from "../pages/MessagesPage/MessagesPage";
 import FirstAidPage from "../pages/FirstAidPage/FirstAidPage";
 import UserInfoPage from "../pages/UserInfoPage/UserInfoPage";
 import HelpPhonesPage from "../pages/HelpPhonesPage/HelpPhonesPage";
+import OperatorsPage from "../pages/OperatorsPage/OperatorsPage";
 
 export const homePage = '/';
 export const loginPage = '/login';
@@ -12,6 +13,7 @@ export const firstAidPage = '/first-aid';
 export const helpPhonesPage = '/help-phones';
 export const messagesPage = '/send-alert-message';
 export const userInfoPage = '/user-info';
+export const operators = '/operators';
 
 const router = createBrowserRouter([
     {
@@ -37,6 +39,10 @@ const router = createBrowserRouter([
     {
         path: userInfoPage,
         element: <UserInfoPage/>,
+    },
+    {
+        path: operators,
+        element: <OperatorsPage/>,
     },
 
 ]);

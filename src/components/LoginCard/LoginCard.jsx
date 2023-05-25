@@ -79,12 +79,17 @@ const LoginCard = () => {
                         }, 1000)
                     }
                     setErrorMessage('* ' + data.message)
+                    setTimeout(() => {
+                        setErrorMessage('')
+
+                    }, 1000)
                 })
 
 
         } catch (e) {
             console.log(e)
         }
+        setIsLoading(false)
     }
 
     useEffect(() => {

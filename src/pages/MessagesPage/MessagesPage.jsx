@@ -17,7 +17,7 @@ const MessagesPage = () => {
         MessagesApi.getUserMessages(user._id)
             .then(messages => {
                 console.log(messages)
-                setMessages([...messages])
+                setMessages([...messages.reverse()])
             })
             .catch(e => console.log(e))
             .finally(() => console.log('GET MES FIN'))
@@ -32,7 +32,7 @@ const MessagesPage = () => {
     }, [])
     return (
         <div>
-            { user &&
+            {user &&
                 <div>
                     <Header/>
 
@@ -43,19 +43,27 @@ const MessagesPage = () => {
                             </h2>
                         </div>
                         <div className={styles.messages}>
-                            <MessageForm userId={user._id}/>
+                            <MessageForm userId={user._id} updateMassages={getMessages}/>
 
                             <div className={styles.messages__wrapper}>
                                 {
                                     messages.length !== 0
                                         ?
                                         messages.map(message =>
-                                            <div key={message._id}>
-                                                {message.title}
-                                            </div>
+                                                <div className={styles.message} key={message._id}>
+                                                    <h1>
+                                                        {message.title}
+                                                    </h1>
+                                                    <p>
+                                                        {message.comment}
+                                                    </p>
+                                                    <button className={styles.message_delete}>
+                                                        Delete
+                                                    </button>
+                                                </div>
                                         )
                                         :
-                                        <div>
+                                        <div style={{textAlign: "center", fontSize: 32}}>
                                             NO ONE
                                         </div>
                                 }
