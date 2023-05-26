@@ -3,6 +3,7 @@ import styles from './OperatorsPage.module.scss'
 import Input from "../../UI/Input/Input";
 import Button from "../../UI/Button/Button";
 import OperatorsApi from "../../api/OperatorsApi";
+
 const OperatorsPage = () => {
     const [alertMessage, setAlertMessage] = useState(null)
     const [operator, setOperator] = useState(null);
@@ -10,7 +11,8 @@ const OperatorsPage = () => {
         idName: '',
         password: ''
     })
-
+    const [statusValue, setStatusValue] = useState('')
+    const [modalImg, setModalImg] = useState(null)
     const wsConnect = useRef()
 
     function changeLoginParameters(parameter, value) {
@@ -19,12 +21,13 @@ const OperatorsPage = () => {
         })
     }
 
-    async function connectOperator(){
+    async function connectOperator() {
         const body = JSON.stringify(login)
         try {
             const operator = await OperatorsApi.loginOperator(body);
-            if(!operator){
-                return console.log(`operator doesn't exist`)
+            console.log(operator)
+            if (operator?.message) {
+                return console.log(operator.message)
             }
             wsConnect.current = new WebSocket('ws://localhost:5000');
 
@@ -36,7 +39,7 @@ const OperatorsPage = () => {
 
             wsConnect.current.onmessage = (feedback) => {
                 const response = JSON.parse(feedback.data)
-                switch (response.event){
+                switch (response.event) {
                     case 'alertMessage':
                         setAlertMessage(response.message)
                 }
@@ -50,12 +53,12 @@ const OperatorsPage = () => {
                 setOperator(null)
             }
 
-        }catch (e){
+        } catch (e) {
             console.log(e)
         }
     }
 
-    function getMessageFromDB(){
+    function getMessageFromDB() {
         const message = {
             event: 'getMessage'
         }
@@ -63,8 +66,19 @@ const OperatorsPage = () => {
         wsConnect.current.send(JSON.stringify(message))
     }
 
-    function logOut(){
+    function logOut() {
+        setAlertMessage(null)
         wsConnect.current.close()
+    }
+
+    function updateMessageStatus(){
+        const mes = {event: 'changeStatus', status: statusValue}
+        wsConnect.current.send(JSON.stringify(mes))
+        setAlertMessage(null)
+    }
+
+    function openImg(photoUrl) {
+        setModalImg(photoUrl)
     }
 
     return (
@@ -73,25 +87,25 @@ const OperatorsPage = () => {
                 ?
                 (
                     <div className={styles.operatorLogin}>
-                    <h2 className={styles.operatorLogin__title}>
-                        Operators Login
-                    </h2>
-                    <div className={styles.operatorLogin__inputs}>
-                        <Input
-                            type={'text'}
-                            value={login.idName}
-                            placeholder={'set operator idName'}
-                            onChange={(event) => changeLoginParameters('idName', event.target.value)}/>
-                        <Input
-                            type={'text'}
-                            value={login.password}
-                            placeholder={'set password'}
-                            onChange={(event) => changeLoginParameters('password', event.target.value)}/>
-                        <Button onClick={connectOperator}>
-                            {'Connect'}
-                        </Button>
+                        <h2 className={styles.operatorLogin__title}>
+                            Operators Login
+                        </h2>
+                        <div className={styles.operatorLogin__inputs}>
+                            <Input
+                                type={'text'}
+                                value={login.idName}
+                                placeholder={'set operator idName'}
+                                onChange={(event) => changeLoginParameters('idName', event.target.value)}/>
+                            <Input
+                                type={'text'}
+                                value={login.password}
+                                placeholder={'set password'}
+                                onChange={(event) => changeLoginParameters('password', event.target.value)}/>
+                            <Button onClick={connectOperator}>
+                                {'Connect'}
+                            </Button>
+                        </div>
                     </div>
-                </div>
                 )
                 :
                 (
@@ -99,7 +113,7 @@ const OperatorsPage = () => {
                         <div className={styles.header}>
                             {`${operator.idName}`}
                             <div>
-                                <Button onClick={getMessageFromDB}>
+                                <Button onClick={getMessageFromDB} isDisable={alertMessage}>
                                     {'Get Alert Message'}
                                 </Button>
                                 <Button onClick={logOut}>
@@ -112,17 +126,63 @@ const OperatorsPage = () => {
                         {alertMessage &&
                             <div className={styles.alertMessage}>
                                 <h2>
-                                    {alertMessage._id}
+                                    {`Message ID - ${alertMessage._id}`}
                                 </h2>
+                                <h2 style={{marginTop: 10}}>
+                                    {`Message Type - ${alertMessage.alertType}`}
+                                </h2>
+                                <h2 style={{marginTop: 10}}>
+                                    {`Message Title - ${alertMessage.title}`}
+                                </h2>
+                                <h2 style={{marginTop: 10}}>Comment :</h2>
+                                <p>
+                                    {` ${alertMessage.comment}`}
+                                </p>
+                                <h2 style={{marginTop: 10}}>
+                                    {alertMessage.photos && `Photos:`}
+                                </h2>
+                                <div style={{display: "flex", flexWrap: "wrap", justifyContent: "center"}}>
+                                    {alertMessage.photos.length &&
+                                        alertMessage.photos.map((photo) =>
+                                            <img key={photo.toString()}
+                                                 src={'http://localhost:5050/' + photo}
+                                                 alt={"user photo"}
+                                                 style={{width: 150, height: 150, margin: 10, cursor: "pointer"}}
+                                                 onClick={() => openImg('http://localhost:5050/' + photo)}
+
+                                            />
+                                        )
+                                    }
+                                </div>
+                                <select className={styles.selectStatus}
+                                        onChange={(event) => setStatusValue(event.target.value)}>
+                                    <option value={'complete'}>{`Processed`}</option>
+                                    <option value={'forGlobal'}>{`ForGlobalView`}</option>
+                                    <option value={'postpone'}>{`Postpone`}</option>
+                                </select>
+                                <Button onClick={updateMessageStatus}>
+                                    {'Confirm form'}
+                                </Button>
                             </div>
 
                         }
-
+                        {modalImg &&
+                            <div style={{background: 'rgba(0, 0, 0, 0.8)', position:"absolute", width: '100%', height: '100%', zIndex: 3, left:0, top: 0}}
+                            onClick={()=> setModalImg('')}
+                            >
+                                <div style={{background: "whitesmoke", width: "max-content",height: "max-content", padding:10, margin: '250px auto'}}>
+                                    <img
+                                        src={modalImg}
+                                        style={{width:800}}
+                                        onClick={(e)=> e.stopPropagation()}
+                                        alt={'img'}/>
+                                </div>
+                            </div>}
                     </div>
+
                 )
 
             }
-
 
 
         </div>

@@ -4,6 +4,7 @@ import Input from "../../UI/Input/Input";
 import MessagesApi from "../../api/messagesApi";
 import {useUserFromLS} from "../../hooks/useUserFromLS";
 import {useNavigate} from "react-router-dom";
+import Button from "../../UI/Button/Button";
 
 const MessageForm = ({userId, updateMassages}) => {
     const fr = new FileReader();
@@ -11,17 +12,17 @@ const MessageForm = ({userId, updateMassages}) => {
     const [messageParams, setMessageParams] = useState({
         title: null,
         dangerLevel: null,
-        description: null,
+        description: '',
         location: null,
-        photos: []
     })
     console.log(messageParams)
-    const [selectedFile, setSelectedFile] = useState({})
-    const [preview, setPreview] = useState({})
+    const [selectedFile, setSelectedFile] = useState(undefined)
+    // const [preview, setPreview] = useState({})
     // console.log(preview)
     const changeParams = (key, param) => {
         setMessageParams({...messageParams, [key]: param})
     }
+    console.log(selectedFile)
 
     const onSelectFile = e => {
         if (!e.target.files || e.target.files.length === 0) {
@@ -36,6 +37,7 @@ const MessageForm = ({userId, updateMassages}) => {
         data.append('title', messageParams.title);
         data.append('alertType', messageParams.dangerLevel);
         data.append('comment', messageParams.description);
+        data.append('location', messageParams.location);
         if (selectedFile?.length) {
             [...selectedFile].forEach((file, index) => {
                 data.append(`photos`, file, file.name);
@@ -43,12 +45,22 @@ const MessageForm = ({userId, updateMassages}) => {
         }
 
 
-
         MessagesApi.createAlertMessage({userId, body: data})
             .then((data) => {
-                if (data.status === 'create') updateMassages()
+                if (data.status === 'create') {
+                    updateMassages();
+                    setMessageParams({
+                        title: null,
+                        dangerLevel: null,
+                        description: '',
+                        location: null,
+                    })
+                    setSelectedFile(undefined)
+                }
+
             })
             .catch((err) => console.error(err));
+
     };
 
     // useEffect(() => {
@@ -92,15 +104,18 @@ const MessageForm = ({userId, updateMassages}) => {
             <textarea
                 className={styles.newMessageBox__textarea}
                 maxLength={5000}
+                value={messageParams.description}
                 placeholder={`Опишіть ситуацію`}
                 onChange={(event) => changeParams('description', event.target.value)}/>
-            <input type='file' onChange={onSelectFile} multiple accept={'image/*'}/>
-            {/*{selectedFile &&*/}
-            {/*    <img src={`${preview}`} alt={''} style={{width: 60}}/>*/}
-            {/*}*/}
-            <button onClick={handleUploadClick}>
-                UPLOAD
-            </button>
+            <div style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+                <input type='file' onChange={onSelectFile} multiple accept={'image/*'}/>
+                {/*{selectedFile &&*/}
+                {/*    <img src={`${preview}`} alt={''} style={{width: 60}}/>*/}
+                {/*}*/}
+                <Button onClick={handleUploadClick}>
+                    {'UPLOAD'}
+                </Button>
+            </div>
         </div>
     );
 };

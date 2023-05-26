@@ -1,7 +1,7 @@
 .body {
   font-family: "Poppins", sans-serif;
   width: 1620px;
-  height: 100vh;
+  height: max-content;
   margin: 20px auto 0;
 
 }
@@ -27,13 +27,14 @@
 
 .messages__wrapper {
   position: relative;
-  width: 60%;
+  width: 65%;
 }
 
 .message {
+  overflow: hidden;
   position: relative;
   max-width: 100%;
-  height: 180px;
+  height: max-content;
   border: 2px solid var(--border);
   border-radius: 8px;
   margin: 0 0 0 20px;
@@ -42,6 +43,11 @@
   & + .message {
     margin-top: 20px;
   }
+}
+
+.message__comment {
+  height: 100px;
+  overflow: hidden;
 }
 
 

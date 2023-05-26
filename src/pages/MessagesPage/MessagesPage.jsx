@@ -30,6 +30,17 @@ const MessagesPage = () => {
         console.log("circle")
         getMessages()
     }, [])
+
+    function deleteMessage(id) {
+        MessagesApi.deleteUserMessages(id)
+            .then(messages => {
+                console.log(messages)
+                getMessages()
+            })
+            .catch(e => console.log(e))
+            .finally(() => console.log('Message Delete'))
+    }
+
     return (
         <div>
             {user &&
@@ -54,12 +65,29 @@ const MessagesPage = () => {
                                                     <h1>
                                                         {message.title}
                                                     </h1>
-                                                    <p>
+                                                    <p className={styles.message__comment}>
                                                         {message.comment}
                                                     </p>
-                                                    <button className={styles.message_delete}>
+                                                    <button className={styles.message_delete}
+                                                            onClick={() => deleteMessage(message._id)}>
                                                         Delete
                                                     </button>
+                                                    {message.photos &&
+                                                        <div style={{display: "flex", width: '100%', overflow: "hidden"}}>
+                                                            {
+                                                                message.photos.map(photo =>
+                                                                    <img
+                                                                        src={'http://localhost:5050/' + photo}
+                                                                         alt={'photo'}
+                                                                         key={photo.toString()}
+                                                                        // onClick={}
+                                                                        style={{width:80, height:80, margin: 10}}
+                                                                    />
+                                                                )
+                                                            }
+                                                        </div>
+
+                                                    }
                                                 </div>
                                         )
                                         :
