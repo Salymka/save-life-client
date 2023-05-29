@@ -46,5 +46,5 @@ export const useUserFromLS = () => {
         }
     }
 
-    return [user, setUserToLS, deleteUserFromLS]
+    return {user, setUserToLS, deleteUserFromLS}
 }

@@ -6,17 +6,16 @@ import {useUserFromLS} from "../../hooks/useUserFromLS";
 import {useNavigate} from "react-router-dom";
 import {homePage} from "../../router/router";
 import MessagesApi from "../../api/messagesApi";
+import {useSelector} from "react-redux";
 
 const MessagesPage = () => {
     const [messages, setMessages] = useState([])
-    const [user] = useUserFromLS();
+    const user = useSelector(state => state.user)
     const navigate = useNavigate();
-    console.log(messages)
 
     function getMessages() {
         MessagesApi.getUserMessages(user._id)
             .then(messages => {
-                console.log(messages)
                 setMessages([...messages.reverse()])
             })
             .catch(e => console.log(e))
@@ -27,14 +26,12 @@ const MessagesPage = () => {
         if (!user?._id) {
             return navigate(homePage)
         }
-        console.log("circle")
         getMessages()
     }, [])
 
     function deleteMessage(id) {
         MessagesApi.deleteUserMessages(id)
             .then(messages => {
-                console.log(messages)
                 getMessages()
             })
             .catch(e => console.log(e))
@@ -43,10 +40,9 @@ const MessagesPage = () => {
 
     return (
         <div>
-            {user &&
-                <div>
-                    <Header/>
-
+            <div>
+                <Header/>
+                {user &&
                     <div className={styles.body}>
                         <div className={styles.titleWrapper}>
                             <h2 className={styles.titleWrapper__title}>
@@ -61,34 +57,35 @@ const MessagesPage = () => {
                                     messages.length !== 0
                                         ?
                                         messages.map(message =>
-                                                <div className={styles.message} key={message._id}>
-                                                    <h1>
-                                                        {message.title}
-                                                    </h1>
-                                                    <p className={styles.message__comment}>
-                                                        {message.comment}
-                                                    </p>
-                                                    <button className={styles.message_delete}
-                                                            onClick={() => deleteMessage(message._id)}>
-                                                        Delete
-                                                    </button>
-                                                    {message.photos &&
-                                                        <div style={{display: "flex", width: '100%', overflow: "hidden"}}>
-                                                            {
-                                                                message.photos.map(photo =>
-                                                                    <img
-                                                                        src={'http://localhost:5050/' + photo}
-                                                                         alt={'photo'}
-                                                                         key={photo.toString()}
-                                                                        // onClick={}
-                                                                        style={{width:80, height:80, margin: 10}}
-                                                                    />
-                                                                )
-                                                            }
-                                                        </div>
+                                            <div className={styles.message} key={message._id}>
+                                                <h1>
+                                                    {message.title}
+                                                </h1>
+                                                <p className={styles.message__comment}>
+                                                    {message.comment}
+                                                </p>
+                                                <button className={styles.message_delete}
+                                                        onClick={() => deleteMessage(message._id)}
+                                                        disabled={!(message.status === 'notProcessed')}>
+                                                    Delete
+                                                </button>
+                                                {message.photos &&
+                                                    <div style={{display: "flex", width: '100%', overflow: "hidden"}}>
+                                                        {
+                                                            message.photos.map(photo =>
+                                                                <img
+                                                                    src={'http://localhost:5050/' + photo}
+                                                                    alt={'photo'}
+                                                                    key={photo.toString()}
+                                                                    // onClick={}
+                                                                    style={{width: 80, height: 80, margin: 10}}
+                                                                />
+                                                            )
+                                                        }
+                                                    </div>
 
-                                                    }
-                                                </div>
+                                                }
+                                            </div>
                                         )
                                         :
                                         <div style={{textAlign: "center", fontSize: 32}}>
@@ -98,8 +95,8 @@ const MessagesPage = () => {
                             </div>
                         </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
     );
 };

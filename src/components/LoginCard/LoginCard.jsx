@@ -13,7 +13,7 @@ import Input from "../../UI/Input/Input";
 const LoginCard = () => {
     const [isRegForm, setIsRegForm] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
-    const [user, setUserToLS] = useUserFromLS()
+    const {setUserToLS} = useUserFromLS()
     const isUserLogin = useIsUserLogin()
     const navigate = useNavigate()
     const [errorMessage, setErrorMessage] = useState('')

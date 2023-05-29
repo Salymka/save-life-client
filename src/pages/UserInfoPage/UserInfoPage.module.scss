@@ -1,0 +1,21 @@
+.container {
+  max-width: 1080px;
+  margin: 30px auto 40px;
+}
+
+.infoWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  input {
+    margin-top: 20px;
+    width: 320px;
+  }
+
+  button {
+    position: absolute;
+    right: 10px;
+    bottom: 5px;
+  }
+}

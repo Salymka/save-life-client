@@ -1,0 +1,14 @@
+.infoMessages {
+  max-width: 1080px;
+  margin: 30px auto 80px;
+  display: flex;
+  flex-direction: column;
+}
+
+.infoMessages__message {
+  position: relative;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  margin: 20px 0 0 20px;
+  padding: 10px;
+}

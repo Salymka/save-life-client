@@ -2,8 +2,6 @@ import React, {useEffect, useState} from 'react';
 import styles from "./MessageForm.module.scss";
 import Input from "../../UI/Input/Input";
 import MessagesApi from "../../api/messagesApi";
-import {useUserFromLS} from "../../hooks/useUserFromLS";
-import {useNavigate} from "react-router-dom";
 import Button from "../../UI/Button/Button";
 
 const MessageForm = ({userId, updateMassages}) => {
@@ -15,14 +13,12 @@ const MessageForm = ({userId, updateMassages}) => {
         description: '',
         location: null,
     })
-    console.log(messageParams)
     const [selectedFile, setSelectedFile] = useState(undefined)
     // const [preview, setPreview] = useState({})
     // console.log(preview)
     const changeParams = (key, param) => {
         setMessageParams({...messageParams, [key]: param})
     }
-    console.log(selectedFile)
 
     const onSelectFile = e => {
         if (!e.target.files || e.target.files.length === 0) {

@@ -9,7 +9,7 @@ export const darkTheme = 'dark__theme';
 
 function App() {
     const theme = useSelector(state => state.theme)
-    useUserFromLS()
+    useUserFromLS();
     return (
         <div>
             <div className={`${theme}`}>

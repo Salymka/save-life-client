@@ -1,0 +1,21 @@
+.wrapperPhones {
+  display: flex;
+  flex-direction: column;
+  margin: 40px 0 60px 0;
+
+}
+
+.phonePoint {
+  position: relative;
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 150px;
+  margin: 20px auto 0;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  padding: 10px;
+
+}
